@@ -117,8 +117,16 @@ const all = async (req, res) => {
 };
 
 const getName = async (req, res) => {
-  const { nombre } = req.body;
-  const products = await models.product.find({ nombre });
+  const { nombre, categoria } = req.body;
+  // const products = await models.product.find({ nombre });
+  console.log(nombre);
+  const regex = new RegExp(`${nombre}`, "i");
+  const products = await models.product.find({
+    nombre: { $regex: regex },
+    categoria,
+  });
+  console.log("products: ", products);
+
   const data = {};
   const index = 0;
   console.log(products);
