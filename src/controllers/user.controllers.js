@@ -59,10 +59,11 @@ const signIn = async (req, res) => {
     if (!user) {
       return res.json({ error: "El usuario no existe" });
     }
-    const isValid = models.user.compare(password, user.password);
+    const isValid = await models.user.compare(password, user.password);
     if (!isValid) {
       return res.json({ error: "Usuario no encontrado" });
     }
+    console.log(user.password, password);
 
     const token = jwt.sign({ user }, config.jwt.secret);
 
